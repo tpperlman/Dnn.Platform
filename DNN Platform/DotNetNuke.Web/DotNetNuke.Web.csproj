@@ -215,6 +215,7 @@
     <Compile Include="Components\LocalizationHelper.cs" />
     <Compile Include="InternalServices\ControlBarController.cs" />
     <Compile Include="InternalServices\ContentWorkflowServiceController.cs" />
+    <Compile Include="InternalServices\MessagingServiceController.cs" />
     <Compile Include="InternalServices\CountryRegionController.cs" />
     <Compile Include="InternalServices\EventLogServiceController.cs" />
     <Compile Include="InternalServices\LanguageServiceController.cs" />
@@ -229,7 +230,7 @@
     <Compile Include="InternalServices\NotificationsServiceController.cs" />
     <Compile Include="InternalServices\ProfileServiceController.cs" />
     <Compile Include="InternalServices\RelationshipServiceController.cs" />
-    <Compile Include="InternalServices\MessagingServiceController.cs" />
+    <Compile Include="InternalServices\TestLogicController.cs" />
     <Compile Include="InternalServices\ServiceRouteMapper.cs" />
     <Compile Include="InternalServices\NewUserNotificationServiceController.cs" />
     <Compile Include="InternalServices\UserFileController.cs" />
