@@ -5,14 +5,15 @@ using System.Net.Http;
 using System.Web;
 
 using System.Web.UI.WebControls;
-//using DotNetNuke.Instrumentation;
+using DotNetNuke.Instrumentation;
 using DotNetNuke.Web.Api;
 
 using System.Net.Http.Formatting;
+using System.Web.Http;
 using DotNetOpenAuth.Messaging;
 using DotNetOpenAuth.OAuth2;
 using DotNetOpenAuth.OAuth2.Messages;
-using OAuth.AuthorizationServer.API.Attributes;
+
 using OAuth.AuthorizationServer.API.Models;
 using OAuth.AuthorizationServer.Core.Data.Model;
 using OAuth.AuthorizationServer.Core.Data.Repositories;
@@ -21,12 +22,12 @@ using Authorization = OAuth.AuthorizationServer.Core.Data.Model.Authorization;
 using DNOA = DotNetOpenAuth.OAuth2;
 
 
-namespace OAuth.AuthorizationServer.API.Controllers
+namespace DotNetNuke.Web.InternalServices
 {
     // Exposed endpoint by which clients can request access to a resource via the OAuth2 protocol
     public class OAuthController :  DnnApiController
     {
-       // private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(OAuthController));
+        private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(OAuthController));
 
         // Ideally, IOC these dependencies.  
         private readonly DNOA.AuthorizationServer _authorizationServer = new DNOA.AuthorizationServer(new AuthorizationServerHost());        
@@ -38,6 +39,9 @@ namespace OAuth.AuthorizationServer.API.Controllers
         // Provides authorization token to the client based on information in the request
         // DotNetOpenAuth is doing all the heavy lifting here.  Request must contain all of the
         // necessary info to grant a token
+        [AllowAnonymous]
+        [HttpGet]
+        //[HttpHeader("x-frame-options", "SAMEORIGIN")] // mitigates clickjacking - see https://github.com/DotNetOpenAuth/DotNetOpenAuth/blob/74b6b4efd2be2680e3067f716829b0c9385ceebe/samples/OAuth2ProtectedWebApi/Code/HttpHeaderAttribute.cs
         public HttpResponseMessage Token()
         {
            // return _authorizationServer.HandleTokenRequest(Request).AsActionResult();
@@ -48,6 +52,7 @@ namespace OAuth.AuthorizationServer.API.Controllers
         // If user is not already authenticated by the resource, user will be redirected to login first and then
         // come back here to authorize the client
         //[ResourceAuthenticated, AcceptVerbs(HttpVerbs.Get | HttpVerbs.Post)]
+        [OauthResourceAuthenticated]
         public HttpResponseMessage Authorize()
         {
             // Have DotNetOpenAuth read the info we need out of the request
@@ -59,7 +64,7 @@ namespace OAuth.AuthorizationServer.API.Controllers
 
             // Make sure the client is one we recognize
             //Client requestingClient = _clientRepository.GetById(pendingRequest.ClientIdentifier);
-            Client requestingClient = OAUTHDataController.ClientRepositoryGetById(pendingRequest.ClientIdentifier);
+            OAuth.AuthorizationServer.Core.Data.Model.Client requestingClient = OAUTHDataController.ClientRepositoryGetById(pendingRequest.ClientIdentifier);
             
             if (requestingClient == null)
             {
@@ -89,6 +94,8 @@ namespace OAuth.AuthorizationServer.API.Controllers
 
         /// Processes the user's response as to whether to authorize a Client to access his/her private data.
         //[ResourceAuthenticated(Order = 1), HttpPost, ValidateAntiForgeryToken(Order = 2)]
+        [OauthResourceAuthenticated]
+        [HttpPost]
         public HttpResponseMessage ProcessAuthorization(bool isApproved)
         {
             // Have DotNetOpenAuth read the info we need out of the request
@@ -100,7 +107,7 @@ namespace OAuth.AuthorizationServer.API.Controllers
 
             // Make sure the client is one we recognize
             //Client requestingClient = _clientRepository.GetById(pendingRequest.ClientIdentifier);
-            Client requestingClient = OAUTHDataController.ClientRepositoryGetById(pendingRequest.ClientIdentifier);
+            OAuth.AuthorizationServer.Core.Data.Model.Client requestingClient = OAUTHDataController.ClientRepositoryGetById(pendingRequest.ClientIdentifier);
             if (requestingClient == null)
             {
                 throw new HttpException(Convert.ToInt32(HttpStatusCode.BadRequest), "Invalid request");

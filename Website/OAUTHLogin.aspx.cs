@@ -52,7 +52,7 @@ namespace DotNetNuke.Services.OAUTHLogin
 
         private void cmdLogin_Click(object sender, EventArgs e)
         {
-            string returnUrl=String.Empty;
+            string returnUrl = "http://localhost/dnn_platform/DesktopModules/internalservices/API/OAUth/Authorize";
             // No checking of password for this sample.  Just care about the username
             // as that's what we're including in the token to send back to the authorization server
             

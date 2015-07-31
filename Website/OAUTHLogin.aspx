@@ -7,14 +7,14 @@
 <head>
     <meta name="revisit-after" content="1 days" />
     <meta name="robots" content="noindex,nofollow" />
-    <title runat="server" id="Title">OAUTH Login</title>
+    <title runat="server" id="Title">DNN OAUTH Login</title>
     <link id="DefaultStylesheet" runat="server" rel="stylesheet" type="text/css" href="~/Portals/_default/default.css" />
     <link id="InstallStylesheet" runat="server" rel="stylesheet" type="text/css" href="~/Install/install.css" />
 </head>
 <body>
     <form id="Form" runat="server">
       <div class="oauthLogin">
-            <h2>OAUTH Login</h2>
+            <h2>DNN OAUTH Login</h2>
             
             <div class="dnnFormItem">
                 Username

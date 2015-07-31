@@ -199,6 +199,7 @@
     <Compile Include="Api\ITabAndModuleInfoProvider.cs" />
     <Compile Include="Api\OAuthAuthorizeScopeAttribute.cs" />
     <Compile Include="Api\PortalAliasRouteManager.cs" />
+    <Compile Include="Api\OAuthResourceAuthenticatedAttribute.cs" />
     <Compile Include="Api\RouteExtensions.cs" />
     <Compile Include="Api\RequireHostAttribute.cs" />
     <Compile Include="Api\StandardTabAndModuleInfoProvider.cs" />
@@ -222,6 +223,9 @@
     <Compile Include="InternalServices\GettingStartedController.cs" />
     <Compile Include="InternalServices\ImageHeader.cs" />
     <Compile Include="InternalServices\NotificationDTO.cs" />
+    <Compile Include="InternalServices\OAuthController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="InternalServices\PageServiceController.cs" />
     <Compile Include="InternalServices\ItemListServiceController.cs" />
     <Compile Include="InternalServices\SearchServiceController.cs" />
@@ -570,6 +574,14 @@
     <EmbeddedResource Include="UI\WebControls\Resources\TermsSelector.js" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\OAuth.AuthorizationServer.API\OAuth.AuthorizationServer.API.csproj">
+      <Project>{d1a7a2bf-04f8-48a3-a824-d20f2f987719}</Project>
+      <Name>OAuth.AuthorizationServer.API</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\OAuth.AuthorizationServer.Core\OAuth.AuthorizationServer.Core.csproj">
+      <Project>{c7dab16c-365f-4e43-af8a-d50087df7c49}</Project>
+      <Name>OAuth.AuthorizationServer.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library\DotNetNuke.Library.csproj">
       <Project>{6b29aded-7b56-4484-bea5-c0e09079535b}</Project>
       <Name>DotNetNuke.Library</Name>

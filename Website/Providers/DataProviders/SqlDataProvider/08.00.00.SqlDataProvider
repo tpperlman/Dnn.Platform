@@ -548,7 +548,7 @@ INSERT [dbo].[Resources] ([Id], [Identifier], [AuthenticationTokenName], [Authen
 SET IDENTITY_INSERT [dbo].[Resources] OFF
 INSERT [dbo].[SymmetricCryptoKeys] ([Bucket], [Handle], [ExpiresUtc], [Secret]) VALUES (N'https://localhost/dnoa/oauth_authorization_code', N'2oBU', CAST(N'2016-07-09 00:06:56.887' AS DateTime), 0x7E84C6E42D6CE5E18D1E99F8C3DAD40566411CC0FFE77F9D90CD263F5BA538CB)
 INSERT [dbo].[SymmetricCryptoKeys] ([Bucket], [Handle], [ExpiresUtc], [Secret]) VALUES (N'https://localhost/dnoa/oauth_refresh_token', N'wxFx', CAST(N'2016-07-09 00:06:56.890' AS DateTime), 0xFE251484D381BAEA12A2DBEC028B5885F26E3F2B503BF28E1B404D31117AD332)
-
+GO
 /******OAUTH support objects Database support******/
 
 CREATE PROCEDURE ClientRepositoryGetById
@@ -607,7 +607,7 @@ INSERT INTO [dbo].[SymmetricCryptoKeys]
      VALUES
            (@Bucket,@Handle,@ExpiresUtc,@Secret)
 END
-
+GO
 CREATE PROCEDURE SCKRGetKey
 	@Bucket nvarchar(128),
 	@Handle nvarchar(max)
@@ -654,27 +654,7 @@ BEGIN
 END
 GO
 
-CREATE PROCEDURE OAuthUserInsert
-	@ClientId nvarchar(128),
-           @UserId nvarchar(128),
-           @ResourceId int,
-           @Scope nvarchar(max),
-           @CreatedOnUtc datetime,
-           @ExpirationDateUtc datetime
-AS
-BEGIN
 
-INSERT INTO [dbo].[Authorizations]
-           ([ClientId]
-           ,[UserId]
-           ,[ResourceId]
-           ,[Scope]
-           ,[CreatedOnUtc]
-           ,[ExpirationDateUtc])
-     VALUES
-           (@ClientId,@UserId,@ResourceId,@Scope,@CreatedOnUtc,@ExpirationDateUtc)
-END
-GO
 /************************************************************/
 /*****              SqlDataProvider                     *****/
 /************************************************************/
