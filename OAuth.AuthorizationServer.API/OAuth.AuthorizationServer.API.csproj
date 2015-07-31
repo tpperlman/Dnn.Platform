@@ -24,12 +24,16 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Website\bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DotNetNuke.Web, Version=8.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Website\bin\DotNetNuke.Web.dll</HintPath>
+    </Reference>
     <Reference Include="DotNetOpenAuth.Core">
       <HintPath>..\..\..\websites\dotnetopenauth\oauth2-master\oauth2-master\OAuth.AuthorizationServer.API\bin\DotNetOpenAuth.Core.dll</HintPath>
     </Reference>
@@ -61,9 +65,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Attributes\ResourceAuthenticatedAttribute.cs" />
-    <Compile Include="Controllers\OAuthController.cs" />
-    <Compile Include="Controllers\OauthServiceRouteMapper.cs" />
     <Compile Include="Models\AccountAuthorizeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -78,14 +79,14 @@
       <Project>{3CD5F6B8-8360-4862-80B6-F402892DB7DD}</Project>
       <Name>DotNetNuke.Instrumentation</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DNN Platform\DotNetNuke.Web\DotNetNuke.Web.csproj">
-      <Project>{EE1329FE-FD88-4E1A-968C-345E394EF080}</Project>
-      <Name>DotNetNuke.Web</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OAuth.AuthorizationServer.Core\OAuth.AuthorizationServer.Core.csproj">
       <Project>{c7dab16c-365f-4e43-af8a-d50087df7c49}</Project>
       <Name>OAuth.AuthorizationServer.Core</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Attributes\" />
+    <Folder Include="Controllers\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
