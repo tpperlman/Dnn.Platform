@@ -68,6 +68,8 @@ namespace DotNetNuke.Services.OAUTHLogin
             // Name of authentication token corresponds to that known by the authorization server
             returnUrl += (returnUrl.Contains("?") ? "&" : "?");
             returnUrl += "resource-authentication-token=" + encryptedToken;
+            returnUrl += "client_id=client1&scope=Resource1-Read&response_type=code";
+            
             var url = new Uri(returnUrl);
             var redirectUrl = url.ToString();
 

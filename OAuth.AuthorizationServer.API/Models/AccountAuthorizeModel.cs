@@ -11,4 +11,10 @@ namespace OAuth.AuthorizationServer.API.Models
         public List<Scope> Scopes { get; set; }
         public EndUserAuthorizationRequest AuthorizationRequest { get; set; }
     }
+
+    public class SimpleAccountAuthorizeModel
+    {
+        public Client Client { get; set; }
+        public EndUserAuthorizationRequest AuthorizationRequest { get; set; }
+    }
 }

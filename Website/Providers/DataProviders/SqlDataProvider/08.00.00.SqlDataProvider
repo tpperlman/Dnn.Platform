@@ -654,7 +654,20 @@ BEGIN
 END
 GO
 
+CREATE PROCEDURE OAuthAuthorizationInsert
+@ClientId [nvarchar](128) ,
+@UserId [nvarchar](128) ,
+@ResourceId [int]  ,
+@Scope [nvarchar] ,
+@CreatedOnUtc [datetime]  ,
+@ExpirationDateUtc [datetime] 
+AS
+BEGIN
 
+INSERT [dbo].[Authorizations]([ClientId], [UserId], [ResourceId], [Scope], [CreatedOnUtc], [ExpirationDateUtc])
+VALUES (@ClientId, @UserId, @ResourceId, @Scope, @CreatedOnUtc, NULL)
+END
+GO
 /************************************************************/
 /*****              SqlDataProvider                     *****/
 /************************************************************/

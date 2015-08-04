@@ -54,6 +54,11 @@ namespace DotNetNuke.Web.Api
         {
            
             
+            string redirect = string.Format("{0}?returnUrl={1}", _targetResource.AuthenticationUrl,
+                actionContext.Request.RequestUri.ToString());
+            var response = actionContext.Request.CreateResponse(System.Net.HttpStatusCode.Redirect);
+            response.Headers.Add("Location", redirect);
+            actionContext.Response = response;
             //filterContext.Result = new RedirectResult(string.Format("{0}?returnUrl={1}",
             //   _targetResource.AuthenticationUrl, new UrlHelper(filterContext.RequestContext).Encode(filterContext.RequestContext.HttpContext.Request.Url.ToString())));
         }
@@ -65,10 +70,10 @@ namespace DotNetNuke.Web.Api
             // Figure out what resource the request is intending to access to see if the
             // user has already authenticated to with it
             EndUserAuthorizationRequest pendingRequest = _authorizationServer.ReadAuthorizationRequest();
-            if (pendingRequest == null)
-            {
-                throw new HttpException(Convert.ToInt32(HttpStatusCode.BadRequest), "Missing authorization request.");
-            }
+            //if (pendingRequest == null)
+            //{
+            //    throw new HttpException(Convert.ToInt32(HttpStatusCode.BadRequest), "Missing authorization request.");
+            //}
 
             try
             {
@@ -111,7 +116,7 @@ namespace DotNetNuke.Web.Api
 
             string name = tokenContentParts[0];
             // DateTime loginDate = DateTime.Parse(tokenContentParts[1]);
-            DateTime loginDate = DateTime.Parse("29 July 2015");
+            DateTime loginDate = DateTime.Parse("04 August 2015");
             bool storeCookie = bool.Parse(tokenContentParts[2]);
 
             if ((DateTime.Now.Subtract(loginDate) > TimeSpan.FromDays(7)))
