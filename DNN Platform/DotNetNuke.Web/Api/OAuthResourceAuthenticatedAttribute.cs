@@ -22,7 +22,7 @@ namespace DotNetNuke.Web.Api
 {
     // This authorization attribute is applied to the authorization methods in our OAuthController
     // to ensure the user has been authenticated by the resource being requested
-    public class OauthResourceAuthenticatedAttribute : AuthorizeAttribute
+    public class OauthResourceAuthenticatedAttribute : AuthorizeAttribute, IOverrideDefaultAuthLevel
     {
         private readonly DNOA.AuthorizationServer _authorizationServer = new DNOA.AuthorizationServer(new AuthorizationServerHost());
        // private readonly ResourceRepository _resourceRepository = new ResourceRepository();
@@ -70,10 +70,10 @@ namespace DotNetNuke.Web.Api
             // Figure out what resource the request is intending to access to see if the
             // user has already authenticated to with it
             EndUserAuthorizationRequest pendingRequest = _authorizationServer.ReadAuthorizationRequest();
-            //if (pendingRequest == null)
-            //{
-            //    throw new HttpException(Convert.ToInt32(HttpStatusCode.BadRequest), "Missing authorization request.");
-            //}
+            if (pendingRequest == null)
+            {
+                throw new HttpException(Convert.ToInt32(HttpStatusCode.BadRequest), "Missing authorization request.");
+            }
 
             try
             {
