@@ -52,7 +52,8 @@ namespace DotNetNuke.Services.OAUTHLogin
 
         private void cmdLogin_Click(object sender, EventArgs e)
         {
-            string returnUrl = "http://localhost/dnn_platform/DesktopModules/internalservices/API/OAUth/Authorize";
+            //string returnUrl = "http://localhost/dnn_platform/DesktopModules/internalservices/API/OAUth/Authorize";
+            string returnUrl = Request.QueryString["ReturnUrl"].ToString();
             // No checking of password for this sample.  Just care about the username
             // as that's what we're including in the token to send back to the authorization server
             
@@ -68,7 +69,10 @@ namespace DotNetNuke.Services.OAUTHLogin
             // Name of authentication token corresponds to that known by the authorization server
             returnUrl += (returnUrl.Contains("?") ? "&" : "?");
             returnUrl += "resource-authentication-token=" + encryptedToken;
-            returnUrl += "client_id=client1&scope=Resource1-Read&response_type=code";
+            returnUrl += "&scope=Resource1-Read&response_type=code";
+            returnUrl += "&state=" + Request.QueryString["state"].ToString();
+            returnUrl += "&redirect_uri=" + Request.QueryString["redirect_uri"].ToString();
+
             
             var url = new Uri(returnUrl);
             var redirectUrl = url.ToString();
