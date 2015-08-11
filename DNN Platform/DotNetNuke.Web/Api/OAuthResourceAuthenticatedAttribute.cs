@@ -116,7 +116,7 @@ namespace DotNetNuke.Web.Api
 
             string name = tokenContentParts[0];
             // DateTime loginDate = DateTime.Parse(tokenContentParts[1]);
-            DateTime loginDate = DateTime.Parse("04 August 2015");
+            DateTime loginDate = DateTime.Parse("11 August 2015");
             bool storeCookie = bool.Parse(tokenContentParts[2]);
 
             if ((DateTime.Now.Subtract(loginDate) > TimeSpan.FromDays(7)))
