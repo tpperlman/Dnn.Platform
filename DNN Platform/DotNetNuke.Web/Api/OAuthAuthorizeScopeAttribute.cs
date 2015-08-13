@@ -65,9 +65,9 @@ namespace DotNetNuke.Web.Api
                     return false;
                 }
 
-                // Have the DotNetOpenAuth resource server inspect the provided request using the configured keys
-                // This checks both that the token is ok and that the token grants the scope required by
-                // the required scope parameters to this attribute
+                 //Have the DotNetOpenAuth resource server inspect the provided request using the configured keys
+                 //This checks both that the token is ok and that the token grants the scope required by
+                 //the required scope parameters to this attribute
                 //var resourceServer = new DNOA.ResourceServer(new StandardAccessTokenAnalyzer(SignatureVerifier, Decrypter));
                 //var principal = resourceServer.GetPrincipal(context.ActionContext.Request, RequiredScopes);
                 //if (principal != null)

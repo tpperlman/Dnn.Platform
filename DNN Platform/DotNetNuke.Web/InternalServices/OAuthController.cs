@@ -213,7 +213,7 @@ namespace DotNetNuke.Web.InternalServices
                 // Add user to our repository if this is their first time
                 //var requestingUser = _userRepository.GetById(User.Identity.Name);
                 //var requestingUser = OAUTHDataController.UserRepositoryGetById(User.Identity.Name);
-                var requestingUser = OAUTHDataController.UserRepositoryGetById("test");
+                var requestingUser = OAUTHDataController.UserRepositoryGetById(User.Identity.Name);
                 if (requestingUser == null)
                 {
                     requestingUser = new OAUTHUser { Id = User.Identity.Name, CreateDateUtc = DateTime.UtcNow };
@@ -247,7 +247,7 @@ namespace DotNetNuke.Web.InternalServices
                                                 
                 // Have DotNetOpenAuth generate an approval to send back to the client
                 //authRequest = _authorizationServer.PrepareApproveAuthorizationRequest(pendingRequest, User.Identity.Name);
-                authRequest = _authorizationServer.PrepareApproveAuthorizationRequest(pendingRequest, "test");
+                authRequest = _authorizationServer.PrepareApproveAuthorizationRequest(pendingRequest, User.Identity.Name);
             }
             else
             {
@@ -263,7 +263,7 @@ namespace DotNetNuke.Web.InternalServices
             // the approval or rejection as they see fit
             //HttpResponseMessage hr = _authorizationServer.Channel.PrepareResponse(authRequest).AsHttpResponseMessage();
             //return hr;
-            var code = GetQueryString(Request, "code");
+            
             var response = Request.CreateResponse(HttpStatusCode.Moved);
 
             var deferred=_authorizationServer.Channel.PrepareResponse(authRequest).AsHttpResponseMessage();
@@ -278,26 +278,6 @@ namespace DotNetNuke.Web.InternalServices
             //return _authorizationServer.Channel.PrepareResponse(authRequest).AsHttpResponseMessage();
         }
 
-        public static string GetQueryString(HttpRequestMessage request, string key)
-        {
-            // IEnumerable<KeyValuePair<string,string>> - right!
-            var queryStrings = request.GetQueryNameValuePairs();
-            if (queryStrings == null)
-                return null;
-            foreach (var VARIABLE in queryStrings)
-            {
-                if (VARIABLE.Key=="test" && VARIABLE.Value=="test")
-                {
-                    
-                }
-            }
-
-            var match = queryStrings.FirstOrDefault(kv => string.Compare(kv.Key, key, true) == 0);
-            if (string.IsNullOrEmpty(match.Value))
-                return null;
-
-            return match.Value;
-        }
     }
 }
 
