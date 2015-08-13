@@ -67,14 +67,42 @@ namespace DotNetNuke.Services.OAUTHLogin
 
             // Redirect back to the authorization server, including the authentication token 
             // Name of authentication token corresponds to that known by the authorization server
-            returnUrl += (returnUrl.Contains("?") ? "&" : "?");
-            returnUrl += "resource-authentication-token=" + encryptedToken;
-            returnUrl += "&scope=Resource1-Read&response_type=code";
-            returnUrl += "&state=" + Request.QueryString["state"].ToString();
-            returnUrl += "&redirect_uri=" + Request.QueryString["redirect_uri"].ToString();
+           // returnUrl += (returnUrl.Contains("?") ? "&" : "?");
+
+            returnUrl =
+                "http://localhost/dnn_platform/DesktopModules/internalservices/API/OAUth/Authorize?scope=Resource1-Read&redirect_uri=http://localhost:51090/TokenRequest/CacheTokenFromImplicitFlow&response_type=token&client_id=client1&resource-authentication-token=";
+
+          //  returnUrl += "resource-authentication-token=" + encryptedToken;
+
+            returnUrl +=  encryptedToken;
+            //returnUrl += "&scope=Resource1-Read";
+            // returnUrl +="&response_type=" + Request.QueryString["response_type"].ToString();
+            //if (Request.QueryString["state"] != null)
+            //{
+            //    returnUrl += "&state=" + Request.QueryString["state"].ToString();
+            //}
+            
+            //returnUrl += "&redirect_uri=" + Request.QueryString["redirect_uri"].ToString();
+
+
+            //copy of original code
+            // Redirect back to the authorization server, including the authentication token 
+            // Name of authentication token corresponds to that known by the authorization server
+            //returnUrl += (returnUrl.Contains("?") ? "&" : "?");
+            //returnUrl += "resource-authentication-token=" + encryptedToken;
+            //returnUrl += "&scope=Resource1-Read";
+            //returnUrl += "&response_type=" + Request.QueryString["response_type"].ToString();
+            //if (Request.QueryString["state"] != null)
+            //{
+            //    returnUrl += "&state=" + Request.QueryString["state"].ToString();
+            //}
+
+            //returnUrl += "&redirect_uri=" + Request.QueryString["redirect_uri"].ToString();
 
             
             var url = new Uri(returnUrl);
+
+
             var redirectUrl = url.ToString();
 
             // URL Encode the values of the querystring parameters

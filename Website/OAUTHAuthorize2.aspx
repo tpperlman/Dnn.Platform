@@ -16,12 +16,12 @@
         <p><b>Requested access: </b></p>
         <ul><li>Read info from Resource1</li></ul>
 
-    <form id="Form" runat="server" action="http://localhost/dnn_platform/DesktopModules/internalservices/API/OAUth/ProcessAuthorization">
+    <form id="Form" runat="server" action="http://localhost/dnn_platform/DesktopModules/internalservices/API/OAUth/ProcessAuthorization" method="post">
       <input id="client_id" name="client_id" type="hidden" value="client1" />
-            <input id="redirect_uri" name="redirect_uri" type="hidden" value="http://localhost:51090/TokenRequest/ExchangeAccessCodeForAuthToken" />
-            <input id="state" name="state" type="hidden" value="<%=Request.QueryString["state"].ToString() %>" />
+            <input id="redirect_uri" name="redirect_uri" type="hidden" value="http://localhost:51090/TokenRequest/CacheTokenFromImplicitFlow" />
+            <input id="state" name="state" type="hidden" value="" />
             <input id="scope" name="scope" type="hidden" value="Resource1-Read" />
-            <input id="response_type" name="response_type" type="hidden" value="<%=Request.QueryString["response_type"].ToString() %>" />
+            <input id="response_type" name="response_type" type="hidden" value="token" />
 <div>
                 <button type="submit" value="True" name="IsApproved">Approve</button>
                 <button type="submit" value="False" name="IsApproved">Cancel</button>
