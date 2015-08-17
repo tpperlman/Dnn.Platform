@@ -1,0 +1,82 @@
+﻿<dotnetnuke type="Package" version="6.0">
+  <packages>
+    <package name="DNN.Modules.OAuth" type="Module" version="08.00.00" isSystem="true">
+      <friendlyName>DNN.Modules.OAuth</friendlyName>      
+      <description>DNN OAuth authorization server.</description>
+      <iconFile>~/DesktopModules/CoreMessaging/Images/messaging_32X32.png</iconFile>
+      <owner>
+        <name>DNN</name>
+        <organization>DNN Corp.</organization>
+        <url>http://www.dnnsoftware.com</url>
+        <email>support@dnnsoftware.com</email>
+      </owner>
+      <license src="License.txt"></license>
+      <releaseNotes src="ReleaseNotes.txt"></releaseNotes>
+      <azureCompatible>true</azureCompatible>
+      <dependencies>
+        <dependency type="CoreVersion">08.00.00</dependency>
+      </dependencies>
+      <components>
+        <component type="Module">
+          <desktopModule>
+            <moduleName>DNN.Modules.OAuth</moduleName>
+            <foldername>OAuth</foldername>
+            <businessControllerClass>DNN.Modules.OAuth.Components.BusinessController, DNN.Modules.OAuth</businessControllerClass>
+            <supportedFeatures />
+           
+          </desktopModule>
+          <eventMessage>
+            <processorType>DotNetNuke.Entities.Modules.EventMessageProcessor, DotNetNuke</processorType>
+            <processorCommand>UpgradeModule</processorCommand>
+            <attributes>
+              <businessControllerClass>DNN.Modules.OAuth.Components.BusinessController, DNN.Modules.OAuth.Components</businessControllerClass>
+              <desktopModuleID>[DESKTOPMODULEID]</desktopModuleID>
+              <upgradeVersionsList>08.00.00</upgradeVersionsList>
+            </attributes>
+          </eventMessage>
+        </component>
+        <component type="Assembly">
+          <assemblies>
+            <assembly>
+              <path>bin</path>
+              <name>DNN.Modules.OAuth.Components.dll</name>
+            </assembly>
+          </assemblies>
+        </component>
+        <component type="File">
+          <files>
+            <basePath>DesktopModules/OAuth</basePath>
+            <file>
+              <name>View.ascx</name>
+              <sourceFileName>View.ascx</sourceFileName>
+            </file>
+          </files>
+        </component>
+        <component type="ResourceFile">
+          <resourceFiles>
+            <basePath>DesktopModules/OAuth</basePath>
+            <resourceFile>
+              <name>Resources.zip</name>
+            </resourceFile>
+          </resourceFiles>
+        </component>
+        <component type="Script">
+          <scripts>
+            <basePath>DesktopModules\OAuth</basePath>
+
+            <script type="Install">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>08.00.00.SqlDataProvider</name>
+              <version>08.00.00</version>
+            </script>
+            <script type="UnInstall">
+              <path>Providers\DataProviders\SqlDataProvider</path>
+              <name>Uninstall.SqlDataProvider</name>
+              <version>08.00.00</version>
+            </script>
+          </scripts>
+        </component>
+      </components>
+    </package>
+  </packages>
+</dotnetnuke>

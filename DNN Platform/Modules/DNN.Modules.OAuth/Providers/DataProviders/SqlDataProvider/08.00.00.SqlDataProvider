@@ -1,0 +1,340 @@
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/*****                                                  *****/
+/*****                                                  *****/
+/***** Note: To manually execute this script you must   *****/
+/*****       perform a search and replace operation     *****/
+/*****       for {databaseOwner} and {objectQualifier}  *****/
+/*****                                                  *****/
+/************************************************************/
+
+
+/******OAUTH Database support******/
+/****** Object:  Table [dbo].[Authorizations]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Authorizations](
+	[AuthorizationId] [int] IDENTITY(1,1) NOT NULL,
+	[ClientId] [nvarchar](128) NULL,
+	[UserId] [nvarchar](128) NULL,
+	[ResourceId] [int] NOT NULL,
+	[Scope] [nvarchar](max) NULL,
+	[CreatedOnUtc] [datetime] NOT NULL,
+	[ExpirationDateUtc] [datetime] NULL,
+ CONSTRAINT [PK_dbo.Authorizations] PRIMARY KEY CLUSTERED 
+(
+	[AuthorizationId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Clients]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Clients](
+	[Id] [nvarchar](128) NOT NULL,
+	[ClientSecret] [nvarchar](max) NULL,
+	[Callback] [nvarchar](max) NULL,
+	[Name] [nvarchar](max) NULL,
+	[ClientType] [int] NOT NULL,
+ CONSTRAINT [PK_dbo.Clients] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[ClientScopes]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ClientScopes](
+	[ClientId] [nvarchar](128) NOT NULL,
+	[ScopeId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.ClientScopes] PRIMARY KEY CLUSTERED 
+(
+	[ClientId] ASC,
+	[ScopeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Nonces]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Nonces](
+	[Context] [nvarchar](500) NOT NULL,
+	[Code] [nvarchar](128) NOT NULL,
+	[Timestamp] [datetime] NOT NULL,
+ CONSTRAINT [PK_dbo.Nonces] PRIMARY KEY CLUSTERED 
+(
+	[Context] ASC,
+	[Code] ASC,
+	[Timestamp] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Resources]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Resources](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[Identifier] [nvarchar](max) NULL,
+	[AuthenticationTokenName] [nvarchar](max) NULL,
+	[AuthenticationUrl] [nvarchar](max) NULL,
+	[AuthenticationKey] [nvarchar](max) NULL,
+	[PublicTokenEncryptionKey] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.Resources] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[ResourceScopes]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ResourceScopes](
+	[ResourceId] [int] NOT NULL,
+	[ScopeId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.ResourceScopes] PRIMARY KEY CLUSTERED 
+(
+	[ResourceId] ASC,
+	[ScopeId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[Scopes]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Scopes](
+	[Identifier] [nvarchar](128) NOT NULL,
+	[Description] [nvarchar](max) NULL,
+ CONSTRAINT [PK_dbo.Scopes] PRIMARY KEY CLUSTERED 
+(
+	[Identifier] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+/****** Object:  Table [dbo].[SymmetricCryptoKeys]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[SymmetricCryptoKeys](
+	[Bucket] [nvarchar](128) NOT NULL,
+	[Handle] [nvarchar](max) NULL,
+	[ExpiresUtc] [datetime] NOT NULL,
+	[Secret] [varbinary](max) NULL,
+ CONSTRAINT [PK_dbo.SymmetricCryptoKeys] PRIMARY KEY CLUSTERED 
+(
+	[Bucket] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+GO
+/****** Object:  Table [dbo].[Users]    Script Date: 09/07/2015 13:14:33 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[OAUTHUsers](
+	[Id] [nvarchar](128) NOT NULL,
+	[CreateDateUtc] [datetime] NOT NULL,
+ CONSTRAINT [PK_dbo.OAUTHUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+ALTER TABLE [dbo].[Authorizations]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Authorizations_dbo.Clients_ClientId] FOREIGN KEY([ClientId])
+REFERENCES [dbo].[Clients] ([Id])
+GO
+ALTER TABLE [dbo].[Authorizations] CHECK CONSTRAINT [FK_dbo.Authorizations_dbo.Clients_ClientId]
+GO
+ALTER TABLE [dbo].[Authorizations]  WITH CHECK ADD  CONSTRAINT [FK_dbo.Authorizations_dbo.Users_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[OAUTHUsers] ([Id])
+GO
+ALTER TABLE [dbo].[Authorizations] CHECK CONSTRAINT [FK_dbo.Authorizations_dbo.Users_UserId]
+GO
+ALTER TABLE [dbo].[ClientScopes]  WITH CHECK ADD  CONSTRAINT [FK_dbo.ClientScopes_dbo.Clients_ClientId] FOREIGN KEY([ClientId])
+REFERENCES [dbo].[Clients] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ClientScopes] CHECK CONSTRAINT [FK_dbo.ClientScopes_dbo.Clients_ClientId]
+GO
+ALTER TABLE [dbo].[ClientScopes]  WITH CHECK ADD  CONSTRAINT [FK_dbo.ClientScopes_dbo.Scopes_ScopeId] FOREIGN KEY([ScopeId])
+REFERENCES [dbo].[Scopes] ([Identifier])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ClientScopes] CHECK CONSTRAINT [FK_dbo.ClientScopes_dbo.Scopes_ScopeId]
+GO
+ALTER TABLE [dbo].[ResourceScopes]  WITH CHECK ADD  CONSTRAINT [FK_dbo.ResourceScopes_dbo.Resources_ResourceId] FOREIGN KEY([ResourceId])
+REFERENCES [dbo].[Resources] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ResourceScopes] CHECK CONSTRAINT [FK_dbo.ResourceScopes_dbo.Resources_ResourceId]
+GO
+ALTER TABLE [dbo].[ResourceScopes]  WITH CHECK ADD  CONSTRAINT [FK_dbo.ResourceScopes_dbo.Scopes_ScopeId] FOREIGN KEY([ScopeId])
+REFERENCES [dbo].[Scopes] ([Identifier])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[ResourceScopes] CHECK CONSTRAINT [FK_dbo.ResourceScopes_dbo.Scopes_ScopeId]
+GO
+
+INSERT [dbo].[Clients] ([Id], [ClientSecret], [Callback], [Name], [ClientType]) VALUES (N'client1', N'clientSecret1', NULL, N'Awesome Client 1', 0)
+INSERT [dbo].[OAUTHUsers] ([Id], [CreateDateUtc]) VALUES (N'test', CAST(N'2015-07-09 00:10:03.870' AS DateTime))
+INSERT [dbo].[Scopes] ([Identifier], [Description]) VALUES (N'Resource1-Read', N'Read info from Resource1')
+SET IDENTITY_INSERT [dbo].[Resources] ON 
+
+INSERT [dbo].[Resources] ([Id], [Identifier], [AuthenticationTokenName], [AuthenticationUrl], [AuthenticationKey], [PublicTokenEncryptionKey]) VALUES (1, N'Resource1', N'resource-authentication-token', N'http://localhost/DNN_Platform/oauthlogin.aspx', N'WebAPIsAreAwesome', N'PFJTQUtleVZhbHVlPjxNb2R1bHVzPjZlZnpYTHNvSmQ5OVVQMjdOQ1hWSnpZSFVtMmlLTUVOSlo2eVpVSFNvTE5uYnFMdENZWjZXaEl3SXY5WVBGeit0Z1AvQWN0dXh3N2VWVzdsU0RaU0IvQU8ySk1kOXJ1MkJ4SHRVaUZVd2pySnNHTlRUS1NhVDFDOTA0YXFaTExaRUxmYnVvVllabnFKWkRvdjlreTkwaHZtTTYwY3FXbkU4TGc2aGZSYlFPOD08L01vZHVsdXM+PEV4cG9uZW50PkFRQUI8L0V4cG9uZW50PjwvUlNBS2V5VmFsdWU+')
+
+SET IDENTITY_INSERT [dbo].[Resources] OFF
+INSERT [dbo].[SymmetricCryptoKeys] ([Bucket], [Handle], [ExpiresUtc], [Secret]) VALUES (N'https://localhost/dnoa/oauth_authorization_code', N'2oBU', CAST(N'2016-07-09 00:06:56.887' AS DateTime), 0x7E84C6E42D6CE5E18D1E99F8C3DAD40566411CC0FFE77F9D90CD263F5BA538CB)
+INSERT [dbo].[SymmetricCryptoKeys] ([Bucket], [Handle], [ExpiresUtc], [Secret]) VALUES (N'https://localhost/dnoa/oauth_refresh_token', N'wxFx', CAST(N'2016-07-09 00:06:56.890' AS DateTime), 0xFE251484D381BAEA12A2DBEC028B5885F26E3F2B503BF28E1B404D31117AD332)
+GO
+/******OAUTH support objects Database support******/
+
+CREATE PROCEDURE ClientRepositoryGetById
+	@id nvarchar(256)
+AS
+BEGIN
+	select * from dbo.Clients where id=@id
+END
+GO
+
+CREATE PROCEDURE ResourceRepositoryFindWithSupportedScopes
+	@scope nvarchar(256)
+AS
+BEGIN
+	select * from dbo.Resources -- where id=@id
+END
+GO
+
+CREATE PROCEDURE AuthorizationRepositoryFindCurrent
+	 @clientIdentifier nvarchar(256),
+	 @userIdentifier nvarchar(256),
+	 @afterUtc datetime
+AS
+BEGIN
+	select * from dbo.Authorizations where ClientId=@clientIdentifier and CreatedOnUtc<=@afterUtc
+END
+GO
+
+CREATE PROCEDURE StoreNonce
+	 @context nvarchar(500),
+	 @nonce nvarchar(128),
+	 @timestampUtc datetime
+AS
+BEGIN
+	INSERT INTO [dbo].[Nonces]
+           ([Context]
+           ,[Code]
+           ,[Timestamp])
+     VALUES
+           (@context,@nonce,@timestampUtc)
+END
+GO
+
+CREATE PROCEDURE StoreKey
+	@Bucket nvarchar(128),
+	@Handle nvarchar(max),
+	@ExpiresUtc datetime,
+	@Secret varbinary(max)
+AS
+BEGIN
+INSERT INTO [dbo].[SymmetricCryptoKeys]
+           ([Bucket]
+           ,[Handle]
+           ,[ExpiresUtc]
+           ,[Secret])
+     VALUES
+           (@Bucket,@Handle,@ExpiresUtc,@Secret)
+END
+GO
+CREATE PROCEDURE SCKRGetKey
+	@Bucket nvarchar(128),
+	@Handle nvarchar(max)
+AS
+BEGIN
+	select * from [dbo].[SymmetricCryptoKeys] where [Bucket]=@Bucket AND [Handle]=@Handle
+END
+GO
+
+CREATE PROCEDURE SCKRGetKeys
+	@Bucket nvarchar(128)
+AS
+BEGIN
+	select * from [dbo].[SymmetricCryptoKeys] where [Bucket]=@Bucket 
+END
+GO
+
+CREATE PROCEDURE SCKRRemoveKey
+	@Bucket nvarchar(128),
+	@Handle nvarchar(max)
+AS
+BEGIN
+	DELETE  from [dbo].[SymmetricCryptoKeys] where [Bucket]=@Bucket AND [Handle]=@Handle
+END
+GO
+
+CREATE PROCEDURE UserRepositoryGetById
+	@id [nvarchar](128) 
+AS
+BEGIN
+	select * from dbo.OAUTHUsers where [Id]=@id
+END
+GO
+
+CREATE PROCEDURE OAuthUserInsert
+	@Id nvarchar(128),
+	@CreateDateUtc datetime
+AS
+BEGIN
+	INSERT INTO [dbo].[OAUTHUsers]
+           ([Id]
+           ,[CreateDateUtc])
+     VALUES (@Id,@CreateDateUtc)
+END
+GO
+
+CREATE PROCEDURE OAuthAuthorizationInsert
+@ClientId [nvarchar](128) ,
+@UserId [nvarchar](128) ,
+@ResourceId [int]  ,
+@Scope [nvarchar] ,
+@CreatedOnUtc [datetime]  ,
+@ExpirationDateUtc [datetime] 
+AS
+BEGIN
+
+INSERT [dbo].[Authorizations]([ClientId], [UserId], [ResourceId], [Scope], [CreatedOnUtc], [ExpirationDateUtc])
+VALUES (@ClientId, @UserId, @ResourceId, @Scope, @CreatedOnUtc, NULL)
+END
+GO
+
+
+/************************************************************/
+/*****              SqlDataProvider                     *****/
+/************************************************************/
