@@ -43,7 +43,7 @@ using DotNetNuke.Web.Api;
 
 namespace DotNetNuke.Web.InternalServices
 {
-    [AllowAnonymous]
+    
     public class TestLogicController : DnnApiController
     {
         private static readonly ILog Logger = LoggerSource.Instance.GetLogger(typeof(TestLogicController));
@@ -55,6 +55,21 @@ namespace DotNetNuke.Web.InternalServices
             
         }
 
+        [OAuthAuthorizeScope("Resource1-Read")]
+        public HttpResponseMessage GetUser()
+        {
+
+            return Request.CreateResponse(HttpStatusCode.OK, User.Identity.ToString());
+
+        }
+
+        [OAuthAuthorizeScope("Resource1-Read")]
+        public HttpResponseMessage GetDay()
+        {
+
+            return Request.CreateResponse(HttpStatusCode.OK, DateTime.Now.DayOfWeek.ToString());
+
+        }
        
     }
 }
