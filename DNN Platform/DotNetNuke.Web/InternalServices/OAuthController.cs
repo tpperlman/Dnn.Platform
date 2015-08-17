@@ -161,13 +161,13 @@ namespace DotNetNuke.Web.InternalServices
             string uri = null;
             if (pendingRequest.ResponseType.ToString() == "AuthorizationCode")
             {
-                uri="http://localhost/dnn_platform/oauthauthorize2.aspx?client_id=client1&redirect_uri=http://localhost:51090/TokenRequest/ExchangeAccessCodeForAuthToken&scope=Resource1-Read&response_type=code&IsApproved=True&state=" + pendingRequest.ClientState.ToString();
+                uri="http://localhost/dnn_platform/oauthauthorize2.aspx?client_id=client1&redirect_uri=http://localhost:51090/TokenRequest/ExchangeAccessCodeForAuthToken&scope=DNN-ALL&response_type=code&IsApproved=True&state=" + pendingRequest.ClientState.ToString();
             }
             else
             {
-                uri = "http://localhost/dnn_platform/oauthauthorize2.aspx?scope=Resource1-Read&redirect_uri=http://localhost:51090/TokenRequest/CacheTokenFromImplicitFlow&response_type=token&client_id=client1&resource-authentication-token=" + rt.ToString(); 
+                uri = "http://localhost/dnn_platform/oauthauthorize2.aspx?scope=DNN-ALL&redirect_uri=http://localhost:51090/TokenRequest/CacheTokenFromImplicitFlow&response_type=token&client_id=client1&resource-authentication-token=" + rt.ToString(); 
             }
-            //response.Headers.Location = new Uri("http://localhost/dnn_platform/oauthauthorize2.aspx?client_id=client1&redirect_uri=http://localhost:51090/TokenRequest/ExchangeAccessCodeForAuthToken&scope=Resource1-Read&response_type=" +pendingRequest.ResponseType + "&IsApproved=True&state=" + pendingRequest.ClientState.ToString());
+            //response.Headers.Location = new Uri("http://localhost/dnn_platform/oauthauthorize2.aspx?client_id=client1&redirect_uri=http://localhost:51090/TokenRequest/ExchangeAccessCodeForAuthToken&scope=DNN-ALL&response_type=" +pendingRequest.ResponseType + "&IsApproved=True&state=" + pendingRequest.ClientState.ToString());
             response.Headers.Location = new Uri(uri);
             
             return response;
