@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke">
-      <HintPath>..\Website\bin\DotNetNuke.dll</HintPath>
-    </Reference>
     <Reference Include="DotNetOpenAuth.Core">
       <HintPath>..\..\..\websites\dotnetopenauth\oauth2-master - dnn\oauth2-master\OAuth.AuthorizationServer.Core\bin\Release\DotNetOpenAuth.Core.dll</HintPath>
     </Reference>
@@ -72,6 +69,12 @@
     <Compile Include="Server\AuthorizationServerSigningKeyManager.cs" />
     <Compile Include="Server\OAUTHDataController.cs" />
     <Compile Include="Utilities\EncodingUtility.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DNN Platform\Library\DotNetNuke.Library.csproj">
+      <Project>{6b29aded-7b56-4484-bea5-c0e09079535b}</Project>
+      <Name>DotNetNuke.Library</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

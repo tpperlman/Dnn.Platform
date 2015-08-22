@@ -1,5 +1,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Support Projects", "Support Projects", "{1DFA65CE-5978-49F9-83BA-CFBD0C7A1814}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DNN Platform", "DNN Platform", "{29273BE6-1AA8-4970-98A0-41BFFEEDA67B}"
@@ -143,7 +145,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "DNN_Platform", "http://loca
 		SccProvider = ""
 		UseIISExpress = "false"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
-		ProjectReferences = "{c7dab16c-365f-4e43-af8a-d50087df7c49}|OAuth.AuthorizationServer.Core.dll;"
+		ProjectReferences = "{c7dab16c-365f-4e43-af8a-d50087df7c49}|OAuth.AuthorizationServer.Core.dll;{6B29ADED-7B56-4484-BEA5-C0E09079535B}|DotNetNuke.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/DNN_Platform"
 		Debug.AspNetCompiler.PhysicalPath = "Website\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\DNN_Platform\"
